@@ -2,10 +2,27 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>生日快乐！</title>
+    <title>Created by Magic1y</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!--<meta itemprop="image" content="./images/fenxiang.png" />-->
     <style>
+        /* 定义飞入动画 */
+@keyframes flyIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 应用飞入动画 */
+.flyIn {
+    animation: flyIn 2s ease-in-out;
+}
+
         html {
             height: 100%;
         }
@@ -81,33 +98,200 @@
             width: 100%;
             font-weight: bold;
         }
+        .video-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width:1280PX; /* 根据需要调整宽度 */
+            height: 720px; /* 保持视频的宽高比 */
+            z-index: 1000; /* 确保视频在字幕之上 */
+        }
+         video#myVideo {
+            width: 100%;
+            height: 100%; /* 原来的100% * 3 */
+        }
+         #danmuContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.danmu {
+    position: absolute;
+    white-space: nowrap;
+    color: white;
+    font-size: 20px;
+    pointer-events: none;
+}
+@keyframes flyInRotate {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1) rotate(0deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        opacity: 1;
+    }
+}
+
+.video-container.fly-in {
+    animation: flyInRotate 1s ease-out forwards;
+}
+/* 基本按钮样式 */
+button {
+    float: left;
+    top: 50%; /* 垂直居中 */
+    left: 0; /* 紧贴左边 */
+    background-color: #00a0ff; /* 背景颜色 */
+    border: none; /* 去掉边框 */
+    color: white; /* 字体颜色 */
+    padding: 15px 32px; /* 内边距 */
+    text-align: center; /* 文本居中 */
+    text-decoration: none; /* 去掉下划线 */
+    display: inline-block; /* 行内块元素 */
+    font-size: 16px; /* 字体大小 */
+    margin: 4px 2px; /* 外边距 */
+    cursor: pointer; /* 鼠标悬停时显示为手型 */
+    border-radius: 8px; /* 圆角 */
+    transition: background-color 0.3s, transform 0.3s; /* 过渡效果 */
+}
+
+/* 鼠标悬停时的样式 */
+button:hover {
+    background-color: #007acc; /* 悬停时的背景颜色 */
+    transform: scale(1.05); /* 悬停时放大 */
+}
+
+/* 按钮按下时的样式 */
+button:active {
+    background-color: #005f8c; /* 按下时的背景颜色 */
+    transform: scale(0.95); /* 按下时缩小 */
+}
+#playVideoButton {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    margin: 10px;
+    z-index: 800;
+}
+
+#playVideoButton2 {
+    position: fixed;
+    top: 60px;
+    left: 0; /* 调整这个值以避免按钮重叠 */
+    margin: 10px;
+    z-index: 800;
+}
+#playVideoButton3 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    z-index: 800;
+}
     </style>
 
 </head>
 
 <body>
-
-
-
+<div id="danmuContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+<div id="videoContainer" class="video-container" style="display: none;">
+    <video id="myVideo" width="1920" height="1080" controls>
+        <source id="videoSource" src="./哥们别傻站在我的狙击镜里%20-%201.哥们%20别傻站在我的狙击镜里(Av1453508737,P1).mp4" type="video/mp4">
+        您的浏览器不支持HTML5视频标签。
+    </video>
+</div>
+<button id="playVideoButton3">牢登～致谢</button>
+<button id="playVideoButton">神秘小零食</button>
+<br/>
+<button id="playVideoButton2">全都非人类</button>
 <script>
     window.onload = function() {
+    document.getElementById('playVideoButton2').addEventListener('click', function() {
+            var videoSource = document.getElementById('videoSource');
+            videoSource.src = './桑尼9号监狱的僵尸犯人们 3（狱长倾情主演 - 1.桑尼9号监狱的僵尸犯人们 3（狱长倾情主演(Av113423207695188,P1).mp4';
+            document.getElementById('videoContainer').style.display = 'block';
+            document.getElementById('myVideo').load(); // 重新加载视频
+            document.getElementById('myVideo').play();
+        });
     document.getElementById('logo').addEventListener('click', function() {
         var audio = document.getElementById("myAudio");
-        audio.play();
+        document.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        });
     });
+
+
+   document.getElementById('playVideoButton').addEventListener('click', function() {
+    document.getElementById('videoContainer').style.display = 'block';
+    videoContainer.classList.add('fly-in'); // 添加动画类
+    document.getElementById('myVideo').play();
+    // 获取默认音频元素并暂停
+    var defaultAudio = document.getElementById("myAudio");
+    defaultAudio.pause();
+    defaultAudio.currentTime = 0; // 重置音频到开始位置（可选）
+
+    // 添加弹幕
+    addDanmu("生日快乐！");
+    addDanmu("sunn7y一台");
+    addDanmu("金阳:别别别");
+    addDanmu("98老登已经苟活");
+});
+
+function addDanmu(text) {
+    var danmuContainer = document.getElementById('danmuContainer');
+    var danmu = document.createElement('div');
+    danmu.className = 'danmu';
+    danmu.style.left = '100%';
+    danmu.style.top = Math.random() * 50 + '%'; // 随机垂直位置
+    danmu.textContent = text;
+    danmuContainer.appendChild(danmu);
+
+    // 弹幕滚动效果
+    var duration = 10 + Math.random() * 10; // 随机滚动时间
+    danmu.style.transition = `left ${duration}s linear`;
+    danmu.style.left = '-100%';
+
+    // 弹幕消失后移除
+    danmu.addEventListener('transitionend', function() {
+        danmuContainer.removeChild(danmu);
+    });
+}
+
+
 };
 </script>
+
+
 <div class="cs">
     <audio id="myAudio" autoplay loop>
-        <source src="music.m4a" type="audio/mpeg">
+        <source src="./music.m4a" type="audio/mpeg">
     </audio>
     <img src="https://www.helloimg.com/i/2024/12/25/676afa5f0d443.png"  id="logo">
 
 </div>
+<script>        // 获取音频元素
+        var audio = document.getElementById('myAudio');
+        // 为 document 添加点击事件监听器
+
+    </script>
 <canvas class="canvas" width="1820" height="905"></canvas>
 
-<p class="text" style="color: #ed3073;">
-    谁是sunn7y一台？金阳:别别别
+<p class="text flyIn" style="color: #ed3073;">
+    谁是Sunn7y一台？金阳:别别别!
+    <br/>
+    Navi是我爹！你给涛神了？打个b+闹麻了！
+    <br/>
+    金阳女装不输良小伞！   不如鬼狙一根！
     <br/>
     98老登已经苟活:
     <br/>
@@ -139,7 +323,7 @@
             S.Drawing.init('.canvas');
             document.body.classList.add('body--ready');
             //想说的话
-            S.UI.simulate("亲爱的Sunn7y哥哥～|生日快乐哟|柿子:永远不死|虾÷:柿子最帅|#countdown 3|#rectangle 15x15|#circle 12 |#time");
+            S.UI.simulate("亲爱的Sunn7y～|生日快乐|永远不死|早日脱单|no÷ no÷ no÷|#countdown 3|最好的26岁！|感恩有你！|#circle 12 |#time");
             S.Drawing.loop(function () {
                 S.Shape.render();
             });
@@ -593,11 +777,79 @@
     }());
     S.init();
 </script>
-<!--//音乐可改-->
+<script>
+            //鼠标点击出现爱心特效
+            (function(window,document,undefined){
+            var hearts = [];
+            window.requestAnimationFrame = (function(){
+                return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback){
+                    setTimeout(callback,1000/60);
+                }
+            })();
+            init();
+            function init(){
+                css(".heart{z-index: 900;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+                attachEvent();
+                gameloop();
+            }
+            function gameloop(){
+                for(var i=0;i<hearts.length;i++){
+                    if(hearts[i].alpha <=0){
+                        document.body.removeChild(hearts[i].el);
+                        hearts.splice(i,1);
+                        continue;
+                    }
+                    hearts[i].y--;
+                    hearts[i].scale += 0.004;
+                    hearts[i].alpha -= 0.013;
+                    hearts[i].el.style.cssText = "left:"+hearts[i].x+"px;top:"+hearts[i].y+"px;opacity:"+hearts[i].alpha+";transform:scale("+hearts[i].scale+","+hearts[i].scale+") rotate(45deg);background:"+hearts[i].color;
+                }
+                requestAnimationFrame(gameloop);
+            }
+            function attachEvent(){
+                var old = typeof window.onclick==="function" && window.onclick;
+                window.onclick = function(event){
+                    old && old();
+                    createHeart(event);
+                }
+            }
+            function createHeart(event){
+                var d = document.createElement("div");
+                d.className = "heart";
+                hearts.push({
+                    el : d,
+                    x : event.clientX - 5,
+                    y : event.clientY - 5,
+                    scale : 1,
+                    alpha : 1,
+                    color : randomColor()
+                });
+                document.body.appendChild(d);
+            }
+            function css(css){
+                var style = document.createElement("style");
+                style.type="text/css";
+                try{
+                    style.appendChild(document.createTextNode(css));
+                }catch(ex){
+                    style.styleSheet.cssText = css;
+                }
+                document.getElementsByTagName('head')[0].appendChild(style);
+            }
+            function randomColor(){
+                return "rgb("+(~~(Math.random()*255))+","+(~~(Math.random()*255))+","+(~~(Math.random()*255))+")";
+            }
+        })(window,document);
 
-
-
-
-
+    </script>
+<footer>
+     <p>版权所有 &copy; 2024 爱吃狮子的小柿子。未经许可，不得转载或复制。</p>
+     <p>网站视频资源作者均已授权,所属链接均已加入跟踪Cookie, 版权归原作者所有。小逼崽子，敢盗就来！</p>
+</footer>
 </body>
 </html>
