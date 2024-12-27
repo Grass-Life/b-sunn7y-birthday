@@ -223,7 +223,7 @@ button:active {
         });
      document.getElementById('playVideoButton').addEventListener('click', function() {
             var videoSource = document.getElementById('videoSource');
-            videoSource.src = './生日快乐.mp4';
+            videoSource.src = 'https://birthday1.oss-cn-beijing.aliyuncs.com/111.mp4?Expires=1735354976&OSSAccessKeyId=TMP.3KhEtZvoDKziiU6XJmoT3BwzETiQZEiUyABtmN4Kt9PgvQdhtTNF7kwLWCNNcpVw5MLZpEknmy8zSutoM2YN5L6KKdcV1y&Signature=o11lGcXdgZI0D0YO3tpNtO07DMY%3D';
             document.getElementById('videoContainer').style.display = 'block';
             document.getElementById('myVideo').load(); // 重新加载视频
             document.getElementById('myVideo').play();
@@ -289,21 +289,30 @@ function addDanmu(text) {
 
 
 <div class="cs">
-    <audio id="myAudio" autoplay loop>
+    <audio id="myAudio" volume="0.6" autoplay loop>
         <source src="./music.m4a" type="audio/mpeg">
     </audio>
     <img src="https://www.helloimg.com/i/2024/12/25/676afa5f0d443.png"  id="logo">
 
 </div>
 <script>        // 获取音频元素
-        var audio = document.getElementById('myAudio');
-        // 为 document 添加点击事件监听器
+         var audio = document.getElementById('myAudio');
+    // 设置音量为0.6
+    audio.volume = 0.1;
+    // 为 document 添加点击事件监听器
+    document.addEventListener('click', function() {
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    });
 
     </script>
 <canvas class="canvas" width="1820" height="905"></canvas>
 
 <p class="text flyIn" style="color: #ed3073;">
-    谁是Sunn7y一台？金阳:别别别!
+    谁是Sunn7y园区一台？金阳:别别别!
     <br/>
     Navi是我爹！你给涛神了？打个b+闹麻了！
     <br/>
